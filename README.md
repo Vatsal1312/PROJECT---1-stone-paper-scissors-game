@@ -1,5 +1,3 @@
-## STAR Approach for Stone Paper Scissors Game
-
 ### Situation:
 I needed to apply my knowledge of the C programming language through a practical project.So i searched on the internet and I found the classic **Stone Paper Scissors** game which can be played against the computer. The game had to handle user inputs, randomize the computer's choices, and keep track of the overall score in a way that was both engaging and reflective of real-world coding practices.
 
