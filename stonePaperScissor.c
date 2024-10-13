@@ -73,51 +73,6 @@ int playRound()
     }
 }
 
-void playGameSeries()
-{
-    srand(time(NULL)); // giving current time as seed to the random number generator
-
-    int numberOfGames = getNumberOfGames();
-    int userWins = 0, computerWins = 0, ties = 0;
-
-    // Play the specified number of rounds
-    for (int i = 0; i < numberOfGames; i++)
-    {
-        int result = playRound(); // Play a single round
-
-        // If result is -2, redo the round (for invalid input only)
-        if (result == -2)
-        {
-            printf(RED "\n\n\t\t\t\tRetrying the round due to invalid input.\n" RESET);
-            i--; 
-            continue;
-        }
-
-        // Update score
-        if (result == 1)
-        {
-            userWins++;
-        }
-        else if (result == -1)
-        {
-            computerWins++;
-        }
-        else
-        {
-            ties++;
-        }
-
-        // Check if someone has won the majority of games early
-        if (userWins > numberOfGames / 2 || computerWins > numberOfGames / 2)
-        {
-            break;
-        }
-    }
-
-    // Print the final results
-    printResults(userWins, computerWins, ties);
-}
-
 // Function to get the number of games
 int getNumberOfGames()
 {
@@ -151,10 +106,56 @@ void printResults(int userWins, int computerWins, int ties)
     {
         printf(RED "\n\t\t\t\tSorry, the computer won the series!\n" RESET);
     }
+
     else
     {
         printf(ORANGE "\n\t\t\t\tIt's a tie series!\n" RESET);
     }
+}
+
+void playGameSeries()
+{
+    srand(time(NULL)); // giving current time as seed to the random number generator
+
+    int numberOfGames = getNumberOfGames();
+    int userWins = 0, computerWins = 0, ties = 0;
+
+    // Play the specified number of rounds
+    for (int i = 0; i < numberOfGames; i++)
+    {
+        int result = playRound(); // Play a single round
+
+        // If result is -2, redo the round (for invalid input only)
+        if (result == -2)
+        {
+            printf(RED "\n\n\t\t\t\tRetrying the round due to invalid input.\n" RESET);
+            i--;
+            continue;
+        }
+
+        // Update score
+        if (result == 1)
+        {
+            userWins++;
+        }
+        else if (result == -1)
+        {
+            computerWins++;
+        }
+        else
+        {
+            ties++;
+        }
+
+        // Check if someone has won the majority of games early
+        if (userWins > numberOfGames / 2 || computerWins > numberOfGames / 2)
+        {
+            break;
+        }
+    }
+
+    // Print the final results
+    printResults(userWins, computerWins, ties);
 }
 
 int main()
