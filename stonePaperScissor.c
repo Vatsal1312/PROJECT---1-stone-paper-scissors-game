@@ -44,7 +44,7 @@ int playRound()
     if (scanf("%d", &userChoice) != 1 || userChoice < 0 || userChoice > 2)
     {
         printf(RED "\n\n\t\t\t\t\tInvalid input! Please enter a number between 0 and 2.\n" RESET);
-        return -1; // For invalid choice
+        return -2; // For invalid choice, return -2 (distinct from -1 for losing)
     }
 
     computerChoice = getComputerChoice();
@@ -57,20 +57,65 @@ int playRound()
     if (userChoice == computerChoice)
     {
         printf(ORANGE "\n\n\n\t\t\t\t\tIt's a tie!\n" RESET);
-        return 0; 
+        return 0; // Tie
     }
     else if ((userChoice == 0 && computerChoice == 2) ||
              (userChoice == 1 && computerChoice == 0) ||
              (userChoice == 2 && computerChoice == 1))
     {
         printf(GREEN "\n\n\t\t\t\t\t\tYou win!\n" RESET);
-        return 1; 
+        return 1; // User win
     }
     else
     {
         printf(RED "\n\n\t\t\t\t\t\tYou lose!\n" RESET);
-        return -1;
+        return -1; // User loss
     }
+}
+
+void playGameSeries()
+{
+    srand(time(NULL)); // giving current time as seed to the random number generator
+
+    int numberOfGames = getNumberOfGames();
+    int userWins = 0, computerWins = 0, ties = 0;
+
+    // Play the specified number of rounds
+    for (int i = 0; i < numberOfGames; i++)
+    {
+        int result = playRound(); // Play a single round
+
+        // If result is -2, redo the round (for invalid input only)
+        if (result == -2)
+        {
+            printf(RED "\n\n\t\t\t\tRetrying the round due to invalid input.\n" RESET);
+            i--; 
+            continue;
+        }
+
+        // Update score
+        if (result == 1)
+        {
+            userWins++;
+        }
+        else if (result == -1)
+        {
+            computerWins++;
+        }
+        else
+        {
+            ties++;
+        }
+
+        // Check if someone has won the majority of games early
+        if (userWins > numberOfGames / 2 || computerWins > numberOfGames / 2)
+        {
+            break;
+        }
+    }
+
+    // Print the final results
+    printResults(userWins, computerWins, ties);
 }
 
 // Function to get the number of games
@@ -113,50 +158,6 @@ void printResults(int userWins, int computerWins, int ties)
 }
 
 // Main game logic function
-void playGameSeries()
-{
-    srand(time(NULL)); // giving current time as seed to the random number generator
-
-    int numberOfGames = getNumberOfGames();
-    int userWins = 0, computerWins = 0, ties = 0;
-
-    // Play the specified number of rounds
-    for (int i = 0; i < numberOfGames; i++)
-    {
-        int result = playRound(); // Play a single round
-
-        // If result is invalid  redo the round
-        if (result == -1)
-        {
-            printf(RED "\n\n\t\t\t\tRetrying the round due to invalid input.\n" RESET);
-            i--; 
-            continue;
-        }
-
-        // Update score
-        if (result == 1)
-        {
-            userWins++;
-        }
-        else if (result == -1)
-        {
-            computerWins++;
-        }
-        else
-        {
-            ties++;
-        }
-
-        // Check if someone has won the majority of games early
-        if (userWins > numberOfGames / 2 || computerWins > numberOfGames / 2)
-        {
-            break;
-        }
-    }
-
-    // Print the final results
-    printResults(userWins, computerWins, ties);
-}
 
 int main()
 {
