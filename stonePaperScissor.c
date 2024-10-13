@@ -157,8 +157,6 @@ void printResults(int userWins, int computerWins, int ties)
     }
 }
 
-// Main game logic function
-
 int main()
 {
     printf(LIGHT_BLUE "\n\n\t\t\t\t\t\tGAME : STONE PAPER SCISSORS\n" RESET);
