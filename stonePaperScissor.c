@@ -44,7 +44,7 @@ int playRound()
     if (scanf("%d", &userChoice) != 1 || userChoice < 0 || userChoice > 2)
     {
         printf(RED "\n\n\t\t\t\t\tInvalid input! Please enter a number between 0 and 2.\n" RESET);
-        return -2; // For invalid choice, return -2 (distinct from -1 for losing)
+        return -2; 
     }
 
     computerChoice = getComputerChoice();
@@ -125,7 +125,6 @@ void playGameSeries()
     {
         int result = playRound(); // Play a single round
 
-        // If result is -2, redo the round (for invalid input only)
         if (result == -2)
         {
             printf(RED "\n\n\t\t\t\tRetrying the round due to invalid input.\n" RESET);
